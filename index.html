@@ -79,7 +79,7 @@
     // create team form validation
     $("#teamForm").validatr({
       showall: true,
-      template: "<div>Please try again.</div>"
+      template: "<div>Please try again.</div>" 
     });
 
     // report score form validation
@@ -96,7 +96,10 @@
       // exit function if form is invalid
       if ($.validatr.validateForm(teamForm) == false) {
         return;
-      } else {
+
+      } //end if
+
+      else {
         $("#teamModal").modal("hide");
       };
 
@@ -148,6 +151,20 @@
       // clear form validation errors
       return false;
 
+    }); // end click
+
+/************reset button on team info form******************/
+
+    $("#reset").click(function(){
+      $("#teamForm input").val("");
+      $(".validatr-message").hide();      
+    }); // end click
+
+/************close modal feature***************************/
+
+    $("#closeModal").click(function(){
+      $("#teamForm input").val("");
+      $(".validatr-message").hide();      
     }); // end click
 
 // *********************** reset season ************************
@@ -807,7 +824,7 @@
     <!-- team form modal -->
     <div id="teamModal" class="modal hide fade">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button id ="closeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Team Information</h3>
       </div>
       <div class="modal-body">
@@ -855,7 +872,7 @@
       </div>
       <div class="modal-footer">
         <button id="createTeam" class="btn btn-primary" type="submit" aria-hidden="true" form="teamForm">Submit</button>
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button id="reset" class="btn">Reset</button>
       </div>
     </div><!-- end #teamModal -->
 
