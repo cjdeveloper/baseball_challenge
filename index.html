@@ -208,6 +208,63 @@
 
     }); // end click
 
+/********************play again***************************/
+
+$("#playAgain").click(function() {
+  $.ajax({
+    url: "/backliftapp/season/cc55261d-117a-4efc-99ff-bb81e80bab43",
+    type: "PUT",
+    dataType: "JSON",
+    data: {
+      lock: "N"
+    },
+    success: function (data) {
+      // delete all game data from server
+      for (var i = 0; i < scores.length; i++) {
+        $.ajax({
+        url: "/backliftapp/game/" + scores[i].id,
+        type: "DELETE",
+        dataType: "JSON"
+        });
+      }; // end for
+
+      // show report score links
+      $("td.final").each(function() {
+        var contents = $(this).text();
+        if (contents == "0 - 0") {
+          $(this).next(".report").children(".score").show();
+        };
+      });
+
+      // reset wins, losses, and percentages of each team to zero
+      for (var i = 0; i < league.length; i ++) {
+        $.ajax({
+          url: "/backliftapp/team/" + league[i].id,
+          type: "PUT",
+          dataType: "JSON",
+          data:{
+            wins: 0,
+            losses: 0,
+            percentage: 0
+          }
+        }); // end ajax
+      }; // end for
+
+      $.ajax({
+      url: "/backliftapp/season/cc55261d-117a-4efc-99ff-bb81e80bab43",
+      type: "PUT",
+      dataType: "JSON",
+      data: {
+        lock: "Y"
+      }      
+      }); // end ajax
+
+      loadPage();
+    } // end success
+    
+  }); // end ajax
+}); // end click
+      
 // ************ make report score links functional *************
 
     // create empty variables
@@ -738,6 +795,7 @@
         <ul class="nav">
           <li><a id="launchTeamModal" href="#teamModal">Create Team</a></li>
           <li><a href="#resetModal" data-toggle="modal">Reset Season</a></li>
+          <li><a href="#playAgainModal" data-toggle="modal">Play again</a></li>
         </ul>
         <a id="title" class="brand pull-right" href="#">Beer League Baseball Challenge</a>
       </div>
@@ -921,6 +979,17 @@
         <button class="btn" data-dismiss="modal" aria-hidden="true">No way, man!</button>
       </div>
     </div><!-- end #resetModal -->
+
+    <!-- play season again modal -->
+    <div id="playAgainModal" class="modal hide fade">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Are you sure you want to replay the season?</h4>
+        <p class="text-error">This will reset the team stats and scores.</p>
+        <button id="playAgain" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Yes, I'm sure.</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">No way, man!</button>
+      </div>
+    </div><!-- end #playAgainModal -->
 
   </div><!-- end .container -->
 </body>
