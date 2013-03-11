@@ -52,3 +52,11 @@ Additional technical information:<br />
   <li>we have dedicated functions that refresh our standings and schedule tables, respectively</li>
   <li>we attempted to structure our script by the order in which elements are loaded into the DOM; when no logical ordering was apparent, we prioritized the sections by which elements users would interact with first</li>
 </ul>
+
+Updates:<br />
+
+<ul>
+  <li>The team information modal now clears the validation errors after clicking the "Reset" button or after closing out the modal.</li>
+  <li>The "Play again" link clears the scores, wins, losses, and percentages for each team and allows the user to replay the season
+      with the same teams.</li>
+</ul>
